@@ -46,7 +46,7 @@ export default function VideoMeetComponent() {
 
     let [videos, setVideos] = useState([])
 
-    let [askForUsername, setAskForUsername] = useState(true);
+    let [askForUsername, setAskForUsername] = useState(true); 
 
     const getPermissions = async () => {
         try {
