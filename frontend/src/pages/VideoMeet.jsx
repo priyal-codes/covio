@@ -88,13 +88,48 @@ export default function VideoMeetComponent() {
 
     let getUserMediaSuccess = (stream) => {
         try {
-            window.localStream = stream;
-            if (localVideoRef.current) {
-                localVideoRef.current.srcObject = stream;
-            }
-        } catch (e) {
+            window.localStream.getTracks().forEach(track => track.stop()) 
+            } catch (e) {
             console.log(e);
         }
+
+        window.localStream = stream;
+        localVideoRef.current.srcObject = stream;
+        for (let id in connections) {
+            if(id == socketIdRef.current) continue;
+
+            connections[id].addStream(window.localStream)
+
+            connections[id].createOffer().then((description)=> {
+                connections[id].setLocalDescription(description)
+                .then(()=> {
+                    socketIdRef.current.emit("signal", id, JSON.stringify({ "sdp": connections[id].localDescription}))
+                })
+                .catch(e => console.log(e))
+            }) 
+        }
+
+        stream.getTracks().forEach(track => track.onended = () => {
+            setVideo(false)
+            setAudio(false);
+
+            try{
+                let tracks = localVideoRef.current.srcObject.getTracks()
+                tracks.forEach(track => track.stop())
+            } catch(e) {console.log(e)}
+
+            //TODO BlackSilence
+
+            for ( let id in connections) {
+                connections[id].addStream(window.localStream)
+                connections[id].createOffer().then((description)=>{
+                    connections[id].setLocalDescription(description)
+                    .then(()=>{
+                        socketRef.current.emit("signal", id, JSON.stringify({"sdp":connections[id].localDescription}))
+                    }).catch(e => console.log(e));
+                })
+            }
+        })
     }
 
     let getUserMedia = () => {
@@ -129,9 +164,12 @@ export default function VideoMeetComponent() {
                            connections[fromId].setLocalDescription(description).then(()=>{
                             socketIdRef.current.emit("signal", fromId, JSON.stringify({"sdp": connections[fromId].localDescription}))
                            }).catch(e => console.log(e)) 
-                        })
+                        }).catch(e=>console.log(e))
                     }
-                })
+                }).catch(e=>console.log(e))
+            }
+            if(signal.ice) {
+                connections[fromId].addIceCandidate(new RTCIceCandidate(signal.ice)).catch(e=>console.log(e));
             }
          }
     }
