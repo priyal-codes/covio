@@ -119,7 +119,10 @@ export default function VideoMeetComponent() {
             } catch(e) {console.log(e)}
 
             //TODO BlackSilence
-
+            let BlackSilence = ( ...args) => new MediaStream([black( ...args), silence()]);
+            window.localStream = blackSilence();
+            localVideoRef.current.srcObject = window.localStream;
+                       
             for ( let id in connections) {
                 connections[id].addStream(window.localStream)
                 connections[id].createOffer().then((description)=>{
@@ -260,6 +263,10 @@ export default function VideoMeetComponent() {
                         connections[socketListId].addStream(window.localStream);  
                     } else {
 
+                        let BlackSilence = ( ...args) => new MediaStream([black( ...args), silence()]);
+                        window.localStream = blackSilence();
+                        connections[socketListId].addStream(window.localStream);
+
                     }
 
                 })
@@ -310,8 +317,16 @@ export default function VideoMeetComponent() {
                     <video ref={localVideoRef} autoPlay muted></video>
                 </div>
  
-            </div> : <></> 
-
+            </div> : <>
+            
+                 <video ref={localVideoRef} autoPlay muted></video>
+                 
+                  {videos.map((video)=>(
+                    <div key={video.socketId}> 
+                    </div>
+                  ))}          
+            </> 
+ 
             } 
         </div>
     )
