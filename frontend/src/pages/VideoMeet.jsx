@@ -323,6 +323,7 @@ export default function VideoMeetComponent() {
                  
                   {videos.map((video)=>(
                     <div key={video.socketId}> 
+                    <h2>{video.socketId}</h2> 
                     </div>
                   ))}          
             </> 
