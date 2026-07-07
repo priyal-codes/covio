@@ -211,6 +211,7 @@ export default function VideoMeetComponent() {
     }
 
     let addMessage = (data, sender, socketIdSender) => {
+        console.log("addMessage triggered:", data, sender, socketIdSender);
         setMessages((prevMessages) => [
             ...prevMessages,
             { sender: sender, data: data, socketIdSender: socketIdSender }
@@ -405,6 +406,7 @@ export default function VideoMeetComponent() {
 
     let sendMessage = () => {
         if (message.trim() !== "") {
+            console.log("sendMessage triggering:", message, username);
             socketRef.current.emit("chat-message", message, username);
             setMessage("");
         }
@@ -499,11 +501,24 @@ export default function VideoMeetComponent() {
                              ))}
                          </div>
                          <div className={styles.chatInput}>
-                             <Input 
+                             <input 
                                  placeholder="Type message..." 
                                  value={message} 
                                  onChange={e => setMessage(e.target.value)} 
-                                 style={{ color: "white", flex: 1, borderBottom: "1px solid white", padding: "4px" }}
+                                 onKeyDown={e => {
+                                     if (e.key === 'Enter') {
+                                         sendMessage();
+                                     }
+                                 }}
+                                 style={{ 
+                                     color: "white", 
+                                     flex: 1, 
+                                     background: "transparent", 
+                                     border: "none", 
+                                     borderBottom: "1px solid white", 
+                                     padding: "4px",
+                                     outline: "none"
+                                 }}
                              />
                              <Button onClick={sendMessage} variant="contained">Send</Button>
                          </div>
