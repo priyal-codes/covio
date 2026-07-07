@@ -30,6 +30,17 @@ export default function VideoMeetComponent() {
 
     let localVideoRef = useRef();
 
+    const setLocalVideoRef = (element) => {
+        if (element) {
+            localVideoRef.current = element;
+            if (screen && window.screenStream) {
+                element.srcObject = window.screenStream;
+            } else if (window.localStream) {
+                element.srcObject = window.localStream;
+            }
+        }
+    };
+
     let [videoAvailable, setVideoAvailable] = useState(true);
     let [audioAvailable, setAudioAvailable] = useState(true);
 
@@ -332,31 +343,24 @@ export default function VideoMeetComponent() {
         }
     }
 
-    let getDisplayMediaSuccess = (stream) => {
-        try {
-            window.localStream.getTracks().forEach(track => track.stop())
-        } catch (e) {
-            console.log(e)
+    let stopScreenShare = () => {
+        setScreen(false);
+        if (window.screenStream) {
+            window.screenStream.getTracks().forEach(track => track.stop());
         }
 
-        window.localStream = stream;
-        localVideoRef.current.srcObject = stream;
-
-        for (let id in connections) {
-            if (id === socketIdRef.current) continue;
-            connections[id].addStream(window.localStream);
-            connections[id].createOffer().then((description) => {
-                connections[id].setLocalDescription(description)
-                .then(() => {
-                    socketRef.current.emit("signal", id, JSON.stringify({ "sdp": connections[id].localDescription }))
-                })
-                .catch(e => console.log(e))
-            })
-        }
-
-        stream.getVideoTracks()[0].onended = () => {
-            setScreen(false);
-            getUserMedia();
+        if (window.localStream) {
+            const camVideoTrack = window.localStream.getVideoTracks()[0];
+            for (let id in connections) {
+                let senders = connections[id].getSenders();
+                let videoSender = senders.find(sender => sender.track && sender.track.kind === "video");
+                if (videoSender) {
+                    videoSender.replaceTrack(camVideoTrack);
+                }
+            }
+            if (localVideoRef.current) {
+                localVideoRef.current.srcObject = window.localStream;
+            }
         }
     }
 
@@ -364,13 +368,27 @@ export default function VideoMeetComponent() {
         if (!screen) {
             if (navigator.mediaDevices.getDisplayMedia) {
                 navigator.mediaDevices.getDisplayMedia({ video: true })
-                .then(getDisplayMediaSuccess)
-                .then(() => setScreen(true))
+                .then((screenStream) => {
+                    const screenTrack = screenStream.getVideoTracks()[0];
+                    for (let id in connections) {
+                        let senders = connections[id].getSenders();
+                        let videoSender = senders.find(sender => sender.track && sender.track.kind === "video");
+                        if (videoSender) {
+                            videoSender.replaceTrack(screenTrack);
+                        }
+                    }
+                    window.screenStream = screenStream;
+                    localVideoRef.current.srcObject = screenStream;
+                    setScreen(true);
+
+                    screenTrack.onended = () => {
+                        stopScreenShare();
+                    }
+                })
                 .catch(e => console.log(e))
             }
         } else {
-            setScreen(false);
-            getUserMedia();
+            stopScreenShare();
         }
     }
 
@@ -398,7 +416,7 @@ export default function VideoMeetComponent() {
             <div className={styles.lobbyContainer}>
                 <div className={styles.lobbyCard}>
                     <h2>Enter into Lobby</h2>
-                    <video className={styles.lobbyVideo} ref={localVideoRef} autoPlay muted></video>
+                    <video className={styles.lobbyVideo} ref={setLocalVideoRef} autoPlay muted></video>
                     <TextField 
                         id="outlined-basic" 
                         label="Username" 
@@ -414,11 +432,7 @@ export default function VideoMeetComponent() {
                  <div className={`${styles.localVideoContainer} ${videos.length === 0 ? styles.alone : ''}`}>
                      <video
                          className={styles.localVideo}
-                         ref={(ref) => {
-                             if (ref && window.localStream) {
-                                 ref.srcObject = window.localStream;
-                             }
-                         }}
+                         ref={setLocalVideoRef}
                          autoPlay
                          muted
                      />
