@@ -55,6 +55,43 @@ export default function VideoMeetComponent() {
     let [newMessages, setNewMessages] = useState(0);
 
     let [username, setUsername] = useState("");
+    let [chatTab, setChatTab] = useState("chat"); // "chat" or "ai"
+    let [aiMessage, setAiMessage] = useState("");
+    let [aiMessages, setAiMessages] = useState([
+        { sender: "AI Assistant", data: "Hello! I am your AI meeting helper. Ask me for 'help', 'agenda', 'notes', 'code', or 'summary'!", socketIdSender: "ai" }
+    ]);
+    let [isAiTyping, setIsAiTyping] = useState(false);
+
+    let handleSendAiMessage = () => {
+        if (aiMessage.trim() === "") return;
+        
+        const userMsg = aiMessage;
+        setAiMessages((prev) => [...prev, { sender: username || "You", data: userMsg, socketIdSender: socketIdRef.current }]);
+        setAiMessage("");
+        setIsAiTyping(true);
+
+        setTimeout(() => {
+            let response = "I'm processing that. As a meeting assistant, I can help you draft notes, write code snippets, or summarize topics! Try asking for 'agenda', 'notes', 'code', or 'summary'.";
+            const lowerMsg = userMsg.toLowerCase();
+
+            if (lowerMsg.includes("hello") || lowerMsg.includes("hi")) {
+                response = `Hi there, ${username || "friend"}! How can I assist you in this meeting?`;
+            } else if (lowerMsg.includes("help")) {
+                response = "Here are things you can ask me:\n• 'agenda' - Draft a meeting agenda\n• 'notes' - Create template meeting notes\n• 'code' - Show a clean React component example\n• 'summary' - Generate a mock summary of our discussion";
+            } else if (lowerMsg.includes("agenda")) {
+                response = "Here's a standard agenda template you can use:\n1. Status Updates (10m)\n2. Technical Deep-Dive & Architecture (25m)\n3. UX/UI Improvements (15m)\n4. Next Steps & Action Items (10m)";
+            } else if (lowerMsg.includes("notes") || lowerMsg.includes("meeting notes")) {
+                response = "Meeting Notes Template:\n- Date: " + new Date().toLocaleDateString() + "\n- Attending: " + (username || "User") + " & team\n\nDiscussion Points:\n- [Enter points]\n\nAction Items:\n- [ ] Task A (Assignee)\n- [ ] Task B (Assignee)";
+            } else if (lowerMsg.includes("code") || lowerMsg.includes("example")) {
+                response = "Here is a modern React functional component snippet:\n\n```jsx\nimport React from 'react';\n\nexport default function Widget() {\n  return (\n    <div className='card'>\n      <h3>AI Enhanced Widget</h3>\n    </div>\n  );\n}\n```";
+            } else if (lowerMsg.includes("summary")) {
+                response = "Based on our current call structure, here is the discussion summary:\n• Participant: " + (username || "Anonymous") + " joined the meeting.\n• Status: Audio and Video streaming are fully operational.\n• Key focus: Enhancing UI/UX and integrating advanced chat capabilities.";
+            }
+
+            setAiMessages((prev) => [...prev, { sender: "AI Assistant", data: response, socketIdSender: "ai" }]);
+            setIsAiTyping(false);
+        }, 1000);
+    };
 
     const videoRef = useRef([])
     let [videos, setVideos] = useState([])
@@ -426,103 +463,175 @@ export default function VideoMeetComponent() {
                         onChange={e => setUsername(e.target.value)} 
                         variant="outlined"
                         fullWidth
+                        InputProps={{
+                            style: {
+                                color: 'white',
+                                background: 'rgba(255,255,255,0.05)',
+                                borderRadius: '12px'
+                            }
+                        }}
+                        InputLabelProps={{
+                            style: { color: '#9ca3af' }
+                        }}
                     />
-                    <Button variant="contained" onClick={connect} fullWidth>Connect</Button>
+                    <Button 
+                        variant="contained" 
+                        onClick={connect} 
+                        fullWidth
+                        style={{
+                            background: 'linear-gradient(135deg, #6366f1 0%, #a855f7 100%)',
+                            borderRadius: '12px',
+                            padding: '12px',
+                            fontWeight: '600',
+                            textTransform: 'none',
+                            boxShadow: '0 4px 14px rgba(99, 102, 241, 0.4)'
+                        }}
+                    >
+                        Join Meeting
+                    </Button>
                 </div>
              </div> : <div className={styles.meetContainer}>
             
-                 <div className={`${styles.localVideoContainer} ${videos.length === 0 ? styles.alone : ''}`}>
+                 <div className={`${styles.localVideoContainer} ${videos.length === 0 ? styles.alone : ''} ${showModal ? styles.shiftLeft : ''}`}>
                      <video
-                         className={styles.localVideo}
-                         ref={setLocalVideoRef}
-                         autoPlay
-                         muted
+                          className={styles.localVideo}
+                          ref={setLocalVideoRef}
+                          autoPlay
+                          muted
                      />
                  </div>
                  
                  {videos.length > 0 && (
-                     <div className={styles.remoteVideosContainer}>
-                          {videos.map((video)=>(
-                            <div className={styles.remoteVideoCard} key={video.socketId}> 
-                                <video
-                                    className={styles.remoteVideo}
-                                    ref={(ref) => {
-                                        if (ref && video.stream) {
-                                            ref.srcObject = video.stream;
-                                        }
-                                    }}
-                                    autoPlay
-                                    playsInline
-                                />
-                                <h2 className={styles.remoteVideoLabel}>{video.socketId}</h2> 
-                            </div>
-                          ))}          
-                     </div>
+                      <div className={`${styles.remoteVideosContainer} ${showModal ? styles.withSidebar : ''}`}>
+                           {videos.map((video)=>(
+                             <div className={styles.remoteVideoCard} key={video.socketId}> 
+                                 <video
+                                     className={styles.remoteVideo}
+                                     ref={(ref) => {
+                                         if (ref && video.stream) {
+                                             ref.srcObject = video.stream;
+                                         }
+                                     }}
+                                     autoPlay
+                                     playsInline
+                                 />
+                                 <h2 className={styles.remoteVideoLabel}>{video.socketId}</h2> 
+                             </div>
+                           ))}          
+                      </div>
                  )}
 
                  {/* Action controls */}
-                 <div className={styles.actionButtonsContainer}>
-                     <IconButton style={{ color: "white" }} onClick={handleAudio}>
-                         {audio ? <MicIcon /> : <MicOffIcon />}
-                     </IconButton>
-                     <IconButton style={{ color: "red" }} onClick={handleEndCall}>
-                         <CallEndIcon />
-                     </IconButton>
-                     <IconButton style={{ color: "white" }} onClick={handleVideo}>
-                         {video ? <VideoCamIcon /> : <VideoCamOffIcon />}
-                     </IconButton>
-                     <IconButton style={{ color: "white" }} onClick={handleScreen}>
-                         {screen ? <StopScreenShareIcon /> : <ScreenShareIcon />}
-                     </IconButton>
-                     <IconButton style={{ color: "white" }} onClick={() => {
-                         setModal(!showModal);
-                         if (!showModal) setNewMessages(0);
+                 <div className={`${styles.actionButtonsContainer} ${showModal ? styles.shiftLeft : ''}`}>
+                     <button className={`${styles.controlButton} ${audio ? styles.active : ''}`} onClick={handleAudio}>
+                          {audio ? <MicIcon /> : <MicOffIcon />}
+                     </button>
+                     <button className={`${styles.controlButton} ${styles.danger}`} onClick={handleEndCall}>
+                          <CallEndIcon />
+                     </button>
+                     <button className={`${styles.controlButton} ${video ? styles.active : ''}`} onClick={handleVideo}>
+                          {video ? <VideoCamIcon /> : <VideoCamOffIcon />}
+                     </button>
+                     <button className={`${styles.controlButton} ${screen ? styles.success : ''}`} onClick={handleScreen}>
+                          {screen ? <StopScreenShareIcon /> : <ScreenShareIcon />}
+                     </button>
+                     <button className={`${styles.controlButton} ${showModal ? styles.active : ''}`} onClick={() => {
+                          setModal(!showModal);
+                          if (!showModal) setNewMessages(0);
                      }}>
-                         <ChatIcon />
-                         {newMessages > 0 && <span style={{ color: "red", fontSize: "12px", marginLeft: "4px" }}>{newMessages}</span>}
-                     </IconButton>
+                          <ChatIcon />
+                          {newMessages > 0 && <span style={{ position: "absolute", top: -4, right: -4, background: "#ef4444", color: "white", borderRadius: "50%", padding: "2px 6px", fontSize: "10px", fontWeight: "bold" }}>{newMessages}</span>}
+                     </button>
                  </div>
 
                  {/* Chat Side panel */}
                  {showModal && (
-                     <div className={styles.chatRoom}>
-                         <div className={styles.chatHeader}>
-                             Chat Room
-                         </div>
-                         <div className={styles.chatMessages}>
-                             {messages.map((msg, index) => (
-                                 <div 
-                                     key={index} 
-                                     className={`${styles.messageBubble} ${msg.socketIdSender === socketIdRef.current ? styles.self : ''}`}
-                                 >
-                                     <div className={styles.messageSender}>{msg.sender}</div>
-                                     <div className={styles.messageText}>{msg.data}</div>
-                                 </div>
-                             ))}
-                         </div>
-                         <div className={styles.chatInput}>
-                             <input 
-                                 placeholder="Type message..." 
-                                 value={message} 
-                                 onChange={e => setMessage(e.target.value)} 
-                                 onKeyDown={e => {
-                                     if (e.key === 'Enter') {
-                                         sendMessage();
-                                     }
-                                 }}
-                                 style={{ 
-                                     color: "white", 
-                                     flex: 1, 
-                                     background: "transparent", 
-                                     border: "none", 
-                                     borderBottom: "1px solid white", 
-                                     padding: "4px",
-                                     outline: "none"
-                                 }}
-                             />
-                             <Button onClick={sendMessage} variant="contained">Send</Button>
-                         </div>
-                     </div>
+                      <div className={styles.chatRoom}>
+                          <div className={styles.chatHeader}>
+                              <h3 className={styles.chatTitle}>Meeting Space</h3>
+                              <div className={styles.chatTabs}>
+                                  <button 
+                                      className={`${styles.chatTabButton} ${chatTab === 'chat' ? styles.active : ''}`}
+                                      onClick={() => setChatTab('chat')}
+                                  >
+                                      Room Chat
+                                  </button>
+                                  <button 
+                                      className={`${styles.chatTabButton} ${chatTab === 'ai' ? styles.active : ''}`}
+                                      onClick={() => setChatTab('ai')}
+                                  >
+                                      ✨ AI Assistant
+                                  </button>
+                              </div>
+                          </div>
+                          
+                          {chatTab === 'chat' ? (
+                              <>
+                                  <div className={styles.chatMessages}>
+                                      {messages.map((msg, index) => (
+                                          <div 
+                                              key={index} 
+                                              className={`${styles.messageBubble} ${msg.socketIdSender === socketIdRef.current ? styles.self : styles.other}`}
+                                          >
+                                              <div className={styles.messageSender}>{msg.sender}</div>
+                                              <div className={styles.messageText}>{msg.data}</div>
+                                          </div>
+                                      ))}
+                                  </div>
+                                  <div className={styles.chatInput}>
+                                      <input 
+                                          className={styles.chatInputField}
+                                          placeholder="Type message to room..." 
+                                          value={message} 
+                                          onChange={e => setMessage(e.target.value)} 
+                                          onKeyDown={e => {
+                                              if (e.key === 'Enter') {
+                                                  sendMessage();
+                                              }
+                                          }}
+                                      />
+                                      <Button onClick={sendMessage} variant="contained" style={{ borderRadius: '12px', background: 'linear-gradient(135deg, #6366f1 0%, #a855f7 100%)', textTransform: 'none' }}>Send</Button>
+                                  </div>
+                              </>
+                          ) : (
+                              <>
+                                  <div className={styles.chatMessages}>
+                                      {aiMessages.map((msg, index) => (
+                                          <div 
+                                              key={index} 
+                                              className={`${styles.messageBubble} ${msg.socketIdSender === socketIdRef.current ? styles.self : styles.ai}`}
+                                          >
+                                              <div className={styles.messageSender}>
+                                                  {msg.sender === "AI Assistant" ? "🤖 AI Assistant" : msg.sender}
+                                              </div>
+                                              <div className={styles.messageText} style={{ whiteSpace: "pre-line" }}>{msg.data}</div>
+                                          </div>
+                                      ))}
+                                      {isAiTyping && (
+                                          <div className={styles.typingIndicator}>
+                                              <span></span>
+                                              <span></span>
+                                              <span></span>
+                                          </div>
+                                      )}
+                                  </div>
+                                  <div className={styles.chatInput}>
+                                      <input 
+                                          className={styles.chatInputField}
+                                          placeholder="Ask AI assistant..." 
+                                          value={aiMessage} 
+                                          onChange={e => setAiMessage(e.target.value)} 
+                                          onKeyDown={e => {
+                                              if (e.key === 'Enter') {
+                                                  handleSendAiMessage();
+                                              }
+                                          }}
+                                      />
+                                      <Button onClick={handleSendAiMessage} variant="contained" style={{ borderRadius: '12px', background: 'linear-gradient(135deg, #6366f1 0%, #a855f7 100%)', textTransform: 'none' }}>Ask</Button>
+                                  </div>
+                              </>
+                          )}
+                      </div>
                  )}
             </div> 
             } 
