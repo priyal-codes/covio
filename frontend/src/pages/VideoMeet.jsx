@@ -466,12 +466,20 @@ export default function VideoMeetComponent() {
                         InputProps={{
                             style: {
                                 color: 'white',
-                                background: 'rgba(255,255,255,0.05)',
-                                borderRadius: '12px'
+                                background: 'rgba(255,255,255,0.03)',
+                                borderRadius: '14px',
+                            }
+                        }}
+                        sx={{
+                            '& label.Mui-focused': { color: '#a855f7' },
+                            '& .MuiOutlinedInput-root': {
+                                '& fieldset': { borderColor: 'rgba(255,255,255,0.1)' },
+                                '&:hover fieldset': { borderColor: 'rgba(168,85,247,0.4)' },
+                                '&.Mui-focused fieldset': { borderColor: '#a855f7' },
                             }
                         }}
                         InputLabelProps={{
-                            style: { color: '#9ca3af' }
+                            style: { color: '#cbd5e1' }
                         }}
                     />
                     <Button 
@@ -480,11 +488,11 @@ export default function VideoMeetComponent() {
                         fullWidth
                         style={{
                             background: 'linear-gradient(135deg, #6366f1 0%, #a855f7 100%)',
-                            borderRadius: '12px',
-                            padding: '12px',
-                            fontWeight: '600',
+                            borderRadius: '14px',
+                            padding: '14px',
+                            fontWeight: '700',
                             textTransform: 'none',
-                            boxShadow: '0 4px 14px rgba(99, 102, 241, 0.4)'
+                            boxShadow: '0 8px 24px rgba(99, 102, 241, 0.4)'
                         }}
                     >
                         Join Meeting
@@ -493,12 +501,21 @@ export default function VideoMeetComponent() {
              </div> : <div className={styles.meetContainer}>
             
                  <div className={`${styles.localVideoContainer} ${videos.length === 0 ? styles.alone : ''} ${showModal ? styles.shiftLeft : ''}`}>
-                     <video
-                          className={styles.localVideo}
-                          ref={setLocalVideoRef}
-                          autoPlay
-                          muted
-                     />
+                     {video ? (
+                         <video
+                              className={styles.localVideo}
+                              ref={setLocalVideoRef}
+                              autoPlay
+                              muted
+                         />
+                     ) : (
+                         <div className={styles.videoPlaceholder}>
+                             <div className={styles.avatarCircle}>
+                                 {username ? username.charAt(0).toUpperCase() : "U"}
+                             </div>
+                             <p className={styles.placeholderText}>Camera Off</p>
+                         </div>
+                     )}
                  </div>
                  
                  {videos.length > 0 && (

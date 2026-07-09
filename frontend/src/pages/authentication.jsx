@@ -3,45 +3,49 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Snackbar from '@mui/material/Snackbar';
 import { AuthContext } from '../contexts/AuthContext';
 
-
-// TODO remove, this demo shouldn't need to reset the theme.
-
-const defaultTheme = createTheme();
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+    primary: {
+      main: '#a855f7', // neon purple
+    },
+    background: {
+      default: '#080b11',
+      paper: 'rgba(15, 23, 42, 0.45)',
+    },
+  },
+  typography: {
+    fontFamily: "'Outfit', 'Inter', sans-serif",
+  },
+});
 
 export default function Authentication() {
     const { handleRegister, handleLogin } = React.useContext(AuthContext);
 
     const [username, setUsername] = React.useState("");
     const [password, setPassword] = React.useState("");
-    const [name, setName ] = React.useState("");
-        const [error, setError] = React.useState();
+    const [name, setName] = React.useState("");
+    const [error, setError] = React.useState();
     const [message, setMessage] = React.useState("");
 
     const [formState, setFormState] = React.useState(0);
-
-    const [open, setOpen] = React.useState(false); 
-
+    const [open, setOpen] = React.useState(false);
 
     let handleAuth = async () => {
       try {
         if(formState === 0) {
-          let result = await handleLogin(username, password);
+          await handleLogin(username, password);
         }
         if(formState === 1) {
           let result = await handleRegister(name, username, password);
-          console.log(result);
           setUsername("");
           setName("");
           setMessage(result);
@@ -56,122 +60,244 @@ export default function Authentication() {
       }
     }
 
-
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <Grid container component="main" sx={{ height: '100vh' }}>
-        <CssBaseline />
-        <Grid
-          size={{ sm: 4, md: 7 }}
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
+      <Box
+        sx={{
+          minHeight: '100vh',
+          width: '100vw',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          background: 'radial-gradient(circle at 50% 50%, #1e1b4b 0%, #080b11 100%)',
+          padding: '20px',
+        }}
+      >
+        <Box
+          component={Paper}
+          elevation={24}
           sx={{
-            display: { xs: 'none', sm: 'block' },
-            backgroundImage: 'url(https://images.unsplash.com/photo-1484950763426-56b5bf172dbb?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)',
-            backgroundRepeat: 'no-repeat',
-            backgroundColor: (t) =>
-              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
+            padding: { xs: '30px 20px', sm: '40px' },
+            width: '100%',
+            maxWidth: '460px',
+            borderRadius: '24px',
+            background: 'rgba(15, 23, 42, 0.65)',
+            backdropFilter: 'blur(20px)',
+            border: '1px solid rgba(255, 255, 255, 0.08)',
+            boxShadow: '0 20px 50px rgba(0,0,0,0.5), 0 0 40px rgba(168, 85, 247, 0.1)',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '24px',
           }}
-        />
-        <Grid size={{ xs: 12, sm: 8, md: 5 }} component={Paper} elevation={6} square>
-          <Box
-            sx={{
-              my: 8,
-              mx: 4,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
+        >
+          <Avatar 
+            sx={{ 
+              m: 1, 
+              background: 'linear-gradient(135deg, #6366f1 0%, #a855f7 100%)',
+              boxShadow: '0 8px 20px rgba(168, 85, 247, 0.4)',
+              width: 56,
+              height: 56
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-              <LockOutlinedIcon />
-            </Avatar>
+            <LockOutlinedIcon />
+          </Avatar>
 
-               <div>
-                 <Button variant={formState === 0 ? "contained" : ""} onClick={()=> {
-                    setFormState(0);
-                    setUsername("");
-                    setPassword("");
-                    setName("");
-                    setError("");
-                 }}>
-                    Sign In
-                 </Button>
-                 <Button variant={formState === 1 ? "contained" : ""} onClick={()=> {
-                    setFormState(1);
-                    setUsername("");
-                    setPassword("");
-                    setName("");
-                    setError("");
-                 }}>
-                    Sign Up
-                 </Button>
-               </div>
+          <Typography 
+            component="h1" 
+            variant="h4" 
+            sx={{ 
+              fontWeight: 800, 
+              background: 'linear-gradient(to right, #ffffff, #c084fc)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              letterSpacing: '-0.5px'
+            }}
+          >
+            {formState === 0 ? "Welcome Back" : "Create Account"}
+          </Typography>
 
-            <Box component="form" sx={{ mt: 1 }}>
-                {/* <p>{name}</p> */}
-                {formState === 1 ? <TextField
+          <Box 
+            sx={{ 
+              display: 'flex', 
+              width: '100%', 
+              background: 'rgba(255,255,255,0.05)', 
+              borderRadius: '50px', 
+              padding: '4px',
+              border: '1px solid rgba(255,255,255,0.05)'
+            }}
+          >
+            <Button 
+              onClick={() => {
+                setFormState(0);
+                setUsername("");
+                setPassword("");
+                setName("");
+                setError("");
+              }}
+              sx={{
+                flex: 1,
+                borderRadius: '50px',
+                color: formState === 0 ? '#fff' : '#9ca3af',
+                background: formState === 0 ? 'rgba(255,255,255,0.1)' : 'transparent',
+                fontWeight: 600,
+                textTransform: 'none',
+                boxShadow: formState === 0 ? '0 4px 12px rgba(0, 0, 0, 0.2)' : 'none',
+                '&:hover': {
+                  background: formState === 0 ? 'rgba(255,255,255,0.15)' : 'rgba(255,255,255,0.05)',
+                }
+              }}
+            >
+              Sign In
+            </Button>
+            <Button 
+              onClick={() => {
+                setFormState(1);
+                setUsername("");
+                setPassword("");
+                setName("");
+                setError("");
+              }}
+              sx={{
+                flex: 1,
+                borderRadius: '50px',
+                color: formState === 1 ? '#fff' : '#9ca3af',
+                background: formState === 1 ? 'rgba(255,255,255,0.1)' : 'transparent',
+                fontWeight: 600,
+                textTransform: 'none',
+                boxShadow: formState === 1 ? '0 4px 12px rgba(0, 0, 0, 0.2)' : 'none',
+                '&:hover': {
+                  background: formState === 1 ? 'rgba(255,255,255,0.15)' : 'rgba(255,255,255,0.05)',
+                }
+              }}
+            >
+              Sign Up
+            </Button>
+          </Box>
+
+          <Box component="form" noValidate sx={{ mt: 1, width: '100%' }}>
+            {formState === 1 && (
+              <TextField
                 margin="normal"
                 required
                 fullWidth
-                id="username"
+                id="name"
                 label="Full Name"
-                name="username"
+                name="name"
                 value={name}
                 autoFocus
                 onChange={(e) => setName(e.target.value)}
-              />:<></>}
+                InputProps={{
+                  style: {
+                    color: 'white',
+                    background: 'rgba(255,255,255,0.03)',
+                    borderRadius: '14px',
+                  }
+                }}
+                sx={{
+                  '& label.Mui-focused': { color: '#a855f7' },
+                  '& .MuiOutlinedInput-root': {
+                    '& fieldset': { borderColor: 'rgba(255,255,255,0.1)' },
+                    '&:hover fieldset': { borderColor: 'rgba(168,85,247,0.4)' },
+                    '&.Mui-focused fieldset': { borderColor: '#a855f7' },
+                  }
+                }}
+              />
+            )}
             
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="username"
-                label="Username"
-                name="Username"
-                value={username}
-                autoFocus
-                onChange={(e) => setUsername(e.target.value)}
-                
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                value={password}
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                onChange={(e) => setPassword(e.target.value)}
-              />
-             
-             <p style={{color: "red"}}>{error}</p>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="username"
+              label="Username"
+              name="Username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              InputProps={{
+                style: {
+                  color: 'white',
+                  background: 'rgba(255,255,255,0.03)',
+                  borderRadius: '14px',
+                }
+              }}
+              sx={{
+                '& label.Mui-focused': { color: '#a855f7' },
+                '& .MuiOutlinedInput-root': {
+                  '& fieldset': { borderColor: 'rgba(255,255,255,0.1)' },
+                  '&:hover fieldset': { borderColor: 'rgba(168,85,247,0.4)' },
+                  '&.Mui-focused fieldset': { borderColor: '#a855f7' },
+                }
+              }}
+            />
+            
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              value={password}
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              onChange={(e) => setPassword(e.target.value)}
+              InputProps={{
+                style: {
+                  color: 'white',
+                  background: 'rgba(255,255,255,0.03)',
+                  borderRadius: '14px',
+                }
+              }}
+              sx={{
+                '& label.Mui-focused': { color: '#a855f7' },
+                '& .MuiOutlinedInput-root': {
+                  '& fieldset': { borderColor: 'rgba(255,255,255,0.1)' },
+                  '&:hover fieldset': { borderColor: 'rgba(168,85,247,0.4)' },
+                  '&.Mui-focused fieldset': { borderColor: '#a855f7' },
+                }
+              }}
+            />
+           
+            {error && (
+              <Typography sx={{ color: '#ef4444', fontSize: '14px', mt: 1, textAlign: 'center', fontWeight: 500 }}>
+                {error}
+              </Typography>
+            )}
 
-              <Button
-                type="button"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }} 
-                onClick={handleAuth}
-              >
-                {formState === 0 ? "Login": "Register"}
-              </Button>
-            </Box>
+            <Button
+              type="button"
+              fullWidth
+              variant="contained"
+              sx={{ 
+                mt: 3, 
+                mb: 2,
+                borderRadius: '14px',
+                padding: '12px',
+                fontWeight: 700,
+                textTransform: 'none',
+                background: 'linear-gradient(135deg, #6366f1 0%, #a855f7 100%)',
+                boxShadow: '0 8px 24px rgba(168, 85, 247, 0.4)',
+                '&:hover': {
+                  background: 'linear-gradient(135deg, #4f46e5 0%, #9333ea 100%)',
+                  boxShadow: '0 10px 28px rgba(168, 85, 247, 0.55)',
+                }
+              }} 
+              onClick={handleAuth}
+            >
+              {formState === 0 ? "Login" : "Register"}
+            </Button>
           </Box>
-        </Grid>
-      </Grid>
+        </Box>
+      </Box>
 
-
-
-          <Snackbar
-            open={open}
-            autoHideDuration={4000}
-            message={message}
-            onClose={() => setOpen(false)}
-          />
-
+      <Snackbar
+        open={open}
+        autoHideDuration={4000}
+        message={message}
+        onClose={() => setOpen(false)}
+      />
     </ThemeProvider>
   );
 }
