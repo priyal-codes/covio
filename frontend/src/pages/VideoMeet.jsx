@@ -487,12 +487,12 @@ export default function VideoMeetComponent() {
                         onClick={connect} 
                         fullWidth
                         style={{
-                            background: 'linear-gradient(135deg, #6366f1 0%, #a855f7 100%)',
+                            background: 'linear-gradient(135deg, #8c7853 0%, #bf7045 100%)',
                             borderRadius: '14px',
                             padding: '14px',
                             fontWeight: '700',
                             textTransform: 'none',
-                            boxShadow: '0 8px 24px rgba(99, 102, 241, 0.4)'
+                            boxShadow: '0 8px 24px rgba(191, 112, 69, 0.15)'
                         }}
                     >
                         Join Meeting
@@ -607,7 +607,7 @@ export default function VideoMeetComponent() {
                                               }
                                           }}
                                       />
-                                      <Button onClick={sendMessage} variant="contained" style={{ borderRadius: '12px', background: 'linear-gradient(135deg, #6366f1 0%, #a855f7 100%)', textTransform: 'none' }}>Send</Button>
+                                      <Button onClick={sendMessage} variant="contained" style={{ borderRadius: '12px', background: 'linear-gradient(135deg, #8c7853 0%, #bf7045 100%)', textTransform: 'none' }}>Send</Button>
                                   </div>
                               </>
                           ) : (
@@ -644,7 +644,7 @@ export default function VideoMeetComponent() {
                                               }
                                           }}
                                       />
-                                      <Button onClick={handleSendAiMessage} variant="contained" style={{ borderRadius: '12px', background: 'linear-gradient(135deg, #6366f1 0%, #a855f7 100%)', textTransform: 'none' }}>Ask</Button>
+                                      <Button onClick={handleSendAiMessage} variant="contained" style={{ borderRadius: '12px', background: 'linear-gradient(135deg, #8c7853 0%, #bf7045 100%)', textTransform: 'none' }}>Ask</Button>
                                   </div>
                               </>
                           )}

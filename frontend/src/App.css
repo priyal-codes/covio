@@ -1,15 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
 
 :root {
-  --neon-purple: #a855f7;
-  --neon-indigo: #6366f1;
-  --neon-pink: #ec4899;
-  --bg-deep: #080b11;
-  --text-white: #ffffff;
-  --text-gray: #e2e8f0;
-  --text-muted: #94a3b8;
-  --glass-bg: rgba(15, 23, 42, 0.45);
-  --glass-border: rgba(255, 255, 255, 0.08);
+  --primary-accent: #bf7045;
+  --secondary-accent: #8c7853;
+  --bg-deep: #141616;
+  --text-white: #f5f4f0;
+  --text-gray: #cccac2;
+  --text-muted: #8e8c84;
+  --glass-bg: rgba(29, 32, 32, 0.45);
+  --glass-border: rgba(255, 255, 255, 0.05);
 }
 
 * {
@@ -29,9 +28,8 @@ body {
   width: 100vw;
   min-height: 100vh;
   background: 
-    radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 40%),
-    radial-gradient(circle at 90% 80%, rgba(168, 85, 247, 0.15) 0%, transparent 40%),
-    #080b11;
+    radial-gradient(circle at 50% -20%, rgba(191, 112, 69, 0.08) 0%, transparent 50%),
+    #141616;
   color: var(--text-white);
   display: flex;
   flex-direction: column;
@@ -46,7 +44,7 @@ body {
   align-items: center;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  background: rgba(8, 11, 17, 0.6);
+  background: rgba(20, 22, 22, 0.6);
   border-bottom: 1px solid var(--glass-border);
   position: sticky;
   top: 0;
@@ -57,7 +55,7 @@ body {
   font-size: 1.8rem;
   font-weight: 800;
   letter-spacing: -1px;
-  background: linear-gradient(135deg, #ffffff 30%, var(--neon-purple) 100%);
+  background: linear-gradient(135deg, #f5f4f0 30%, var(--primary-accent) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -77,7 +75,7 @@ body {
 }
 
 .landingPageContainer nav .navlist p:hover {
-  color: var(--neon-purple);
+  color: var(--primary-accent);
 }
 
 .landingPageContainer nav .navlist div[role='button'] {
@@ -89,10 +87,10 @@ body {
 }
 
 .landingPageContainer nav .navlist div[role='button']:hover {
-  background: linear-gradient(135deg, var(--neon-indigo) 0%, var(--neon-purple) 100%);
+  background: linear-gradient(135deg, var(--secondary-accent) 0%, var(--primary-accent) 100%);
   border-color: transparent;
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+  box-shadow: 0 8px 20px rgba(191, 112, 69, 0.15);
 }
 
 .landingPageContainer nav .navlist div[role='button'] p {
@@ -144,10 +142,9 @@ body {
 }
 
 .landingMainContainer h1 span {
-  background: linear-gradient(135deg, #ff7e40 0%, #ff512f 100%);
+  background: linear-gradient(135deg, #bf7045 0%, #d48b61 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 40px rgba(255, 126, 64, 0.2);
 }
 
 .landingMainContainer p {
@@ -183,8 +180,8 @@ body {
   font-size: 1.2rem;
   padding: 1rem 2.5rem;
   border-radius: 50px;
-  background: linear-gradient(135deg, var(--neon-indigo) 0%, var(--neon-purple) 100%);
-  box-shadow: 0 8px 30px rgba(168, 85, 247, 0.4);
+  background: linear-gradient(135deg, var(--secondary-accent) 0%, var(--primary-accent) 100%);
+  box-shadow: 0 8px 30px rgba(191, 112, 69, 0.2);
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
@@ -192,8 +189,8 @@ body {
 
 .landingMainContainer div[role='button'] a:hover {
   transform: translateY(-3px);
-  box-shadow: 0 12px 35px rgba(168, 85, 247, 0.6);
-  filter: brightness(1.1);
+  box-shadow: 0 12px 35px rgba(191, 112, 69, 0.3);
+  filter: brightness(1.05);
 }
 
 .landingMainContainer div[role='button'] a:active {
@@ -212,7 +209,7 @@ body {
   position: absolute;
   width: 350px;
   height: 350px;
-  background: radial-gradient(circle, rgba(168, 85, 247, 0.25) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(191, 112, 69, 0.08) 0%, transparent 70%);
   filter: blur(40px);
   z-index: 1;
 }
@@ -223,7 +220,7 @@ body {
   max-height: 60vh;
   object-fit: contain;
   z-index: 2;
-  filter: drop-shadow(0 20px 50px rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(0 20px 50px rgba(0, 0, 0, 0.4));
   animation: float 6s ease-in-out infinite;
 }
 

@@ -15,11 +15,11 @@ const darkTheme = createTheme({
   palette: {
     mode: 'dark',
     primary: {
-      main: '#a855f7', // neon purple
+      main: '#bf7045', // warm copper
     },
     background: {
-      default: '#080b11',
-      paper: 'rgba(15, 23, 42, 0.45)',
+      default: '#141616',
+      paper: 'rgba(29, 32, 32, 0.45)',
     },
   },
   typography: {
@@ -70,7 +70,7 @@ export default function Authentication() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          background: 'radial-gradient(circle at 50% 50%, #1e1b4b 0%, #080b11 100%)',
+          background: 'radial-gradient(circle at 50% 50%, #242422 0%, #141616 100%)',
           padding: '20px',
         }}
       >
@@ -82,10 +82,10 @@ export default function Authentication() {
             width: '100%',
             maxWidth: '460px',
             borderRadius: '24px',
-            background: 'rgba(15, 23, 42, 0.65)',
+            background: 'rgba(29, 32, 32, 0.65)',
             backdropFilter: 'blur(20px)',
-            border: '1px solid rgba(255, 255, 255, 0.08)',
-            boxShadow: '0 20px 50px rgba(0,0,0,0.5), 0 0 40px rgba(168, 85, 247, 0.1)',
+            border: '1px solid rgba(255, 255, 255, 0.05)',
+            boxShadow: '0 20px 50px rgba(0,0,0,0.4), 0 0 40px rgba(191, 112, 69, 0.03)',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -95,8 +95,8 @@ export default function Authentication() {
           <Avatar 
             sx={{ 
               m: 1, 
-              background: 'linear-gradient(135deg, #6366f1 0%, #a855f7 100%)',
-              boxShadow: '0 8px 20px rgba(168, 85, 247, 0.4)',
+              background: 'linear-gradient(135deg, #8c7853 0%, #bf7045 100%)',
+              boxShadow: '0 8px 20px rgba(191, 112, 69, 0.15)',
               width: 56,
               height: 56
             }}
@@ -109,7 +109,7 @@ export default function Authentication() {
             variant="h4" 
             sx={{ 
               fontWeight: 800, 
-              background: 'linear-gradient(to right, #ffffff, #c084fc)',
+              background: 'linear-gradient(to right, #ffffff, #d48b61)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               letterSpacing: '-0.5px'
@@ -122,10 +122,10 @@ export default function Authentication() {
             sx={{ 
               display: 'flex', 
               width: '100%', 
-              background: 'rgba(255,255,255,0.05)', 
+              background: 'rgba(255,255,255,0.03)', 
               borderRadius: '50px', 
               padding: '4px',
-              border: '1px solid rgba(255,255,255,0.05)'
+              border: '1px solid rgba(255,255,255,0.03)'
             }}
           >
             <Button 
@@ -140,12 +140,12 @@ export default function Authentication() {
                 flex: 1,
                 borderRadius: '50px',
                 color: formState === 0 ? '#fff' : '#9ca3af',
-                background: formState === 0 ? 'rgba(255,255,255,0.1)' : 'transparent',
+                background: formState === 0 ? 'rgba(255,255,255,0.08)' : 'transparent',
                 fontWeight: 600,
                 textTransform: 'none',
-                boxShadow: formState === 0 ? '0 4px 12px rgba(0, 0, 0, 0.2)' : 'none',
+                boxShadow: formState === 0 ? '0 4px 12px rgba(0, 0, 0, 0.15)' : 'none',
                 '&:hover': {
-                  background: formState === 0 ? 'rgba(255,255,255,0.15)' : 'rgba(255,255,255,0.05)',
+                  background: formState === 0 ? 'rgba(255,255,255,0.12)' : 'rgba(255,255,255,0.03)',
                 }
               }}
             >
@@ -163,12 +163,12 @@ export default function Authentication() {
                 flex: 1,
                 borderRadius: '50px',
                 color: formState === 1 ? '#fff' : '#9ca3af',
-                background: formState === 1 ? 'rgba(255,255,255,0.1)' : 'transparent',
+                background: formState === 1 ? 'rgba(255,255,255,0.08)' : 'transparent',
                 fontWeight: 600,
                 textTransform: 'none',
-                boxShadow: formState === 1 ? '0 4px 12px rgba(0, 0, 0, 0.2)' : 'none',
+                boxShadow: formState === 1 ? '0 4px 12px rgba(0, 0, 0, 0.15)' : 'none',
                 '&:hover': {
-                  background: formState === 1 ? 'rgba(255,255,255,0.15)' : 'rgba(255,255,255,0.05)',
+                  background: formState === 1 ? 'rgba(255,255,255,0.12)' : 'rgba(255,255,255,0.03)',
                 }
               }}
             >
@@ -191,16 +191,16 @@ export default function Authentication() {
                 InputProps={{
                   style: {
                     color: 'white',
-                    background: 'rgba(255,255,255,0.03)',
+                    background: 'rgba(255,255,255,0.02)',
                     borderRadius: '14px',
                   }
                 }}
                 sx={{
-                  '& label.Mui-focused': { color: '#a855f7' },
+                  '& label.Mui-focused': { color: '#bf7045' },
                   '& .MuiOutlinedInput-root': {
-                    '& fieldset': { borderColor: 'rgba(255,255,255,0.1)' },
-                    '&:hover fieldset': { borderColor: 'rgba(168,85,247,0.4)' },
-                    '&.Mui-focused fieldset': { borderColor: '#a855f7' },
+                    '& fieldset': { borderColor: 'rgba(255,255,255,0.05)' },
+                    '&:hover fieldset': { borderColor: 'rgba(191,112,69,0.4)' },
+                    '&.Mui-focused fieldset': { borderColor: '#bf7045' },
                   }
                 }}
               />
@@ -218,16 +218,16 @@ export default function Authentication() {
               InputProps={{
                 style: {
                   color: 'white',
-                  background: 'rgba(255,255,255,0.03)',
+                  background: 'rgba(255,255,255,0.02)',
                   borderRadius: '14px',
                 }
               }}
               sx={{
-                '& label.Mui-focused': { color: '#a855f7' },
+                '& label.Mui-focused': { color: '#bf7045' },
                 '& .MuiOutlinedInput-root': {
-                  '& fieldset': { borderColor: 'rgba(255,255,255,0.1)' },
-                  '&:hover fieldset': { borderColor: 'rgba(168,85,247,0.4)' },
-                  '&.Mui-focused fieldset': { borderColor: '#a855f7' },
+                  '& fieldset': { borderColor: 'rgba(255,255,255,0.05)' },
+                  '&:hover fieldset': { borderColor: 'rgba(191,112,69,0.4)' },
+                  '&.Mui-focused fieldset': { borderColor: '#bf7045' },
                 }
               }}
             />
@@ -246,16 +246,16 @@ export default function Authentication() {
               InputProps={{
                 style: {
                   color: 'white',
-                  background: 'rgba(255,255,255,0.03)',
+                  background: 'rgba(255,255,255,0.02)',
                   borderRadius: '14px',
                 }
               }}
               sx={{
-                '& label.Mui-focused': { color: '#a855f7' },
+                '& label.Mui-focused': { color: '#bf7045' },
                 '& .MuiOutlinedInput-root': {
-                  '& fieldset': { borderColor: 'rgba(255,255,255,0.1)' },
-                  '&:hover fieldset': { borderColor: 'rgba(168,85,247,0.4)' },
-                  '&.Mui-focused fieldset': { borderColor: '#a855f7' },
+                  '& fieldset': { borderColor: 'rgba(255,255,255,0.05)' },
+                  '&:hover fieldset': { borderColor: 'rgba(191,112,69,0.4)' },
+                  '&.Mui-focused fieldset': { borderColor: '#bf7045' },
                 }
               }}
             />
@@ -277,11 +277,11 @@ export default function Authentication() {
                 padding: '12px',
                 fontWeight: 700,
                 textTransform: 'none',
-                background: 'linear-gradient(135deg, #6366f1 0%, #a855f7 100%)',
-                boxShadow: '0 8px 24px rgba(168, 85, 247, 0.4)',
+                background: 'linear-gradient(135deg, #8c7853 0%, #bf7045 100%)',
+                boxShadow: '0 8px 24px rgba(191, 112, 69, 0.15)',
                 '&:hover': {
-                  background: 'linear-gradient(135deg, #4f46e5 0%, #9333ea 100%)',
-                  boxShadow: '0 10px 28px rgba(168, 85, 247, 0.55)',
+                  background: 'linear-gradient(135deg, #706042 0%, #a65d35 100%)',
+                  boxShadow: '0 10px 28px rgba(191, 112, 69, 0.25)',
                 }
               }} 
               onClick={handleAuth}
