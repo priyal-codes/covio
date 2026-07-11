@@ -13,6 +13,15 @@ export default function Landing() {
         }
     }, []);
 
+    const handleJoinAsGuest = () => {
+        const chars = 'abcdefghijklmnopqrstuvwxyz';
+        const part1 = Array.from({ length: 3 }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
+        const part2 = Array.from({ length: 3 }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
+        const part3 = Array.from({ length: 3 }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
+        const generatedCode = `${part1}-${part2}-${part3}`;
+        navigate(`/${generatedCode}`);
+    };
+
     return (
         <div className='landingPageContainer'>
           <nav>
@@ -20,9 +29,9 @@ export default function Landing() {
                <h2>Covio Video Call</h2>
             </div>
             <div className='navlist'>
-                <p onClick={() => navigate('/auth')}>Join as Guest</p>
-                <p onClick={() => navigate('/auth')}>Register</p>
-                <div role='button' onClick={() => navigate(isLoggedIn ? '/home' : '/auth')}>
+                <p onClick={handleJoinAsGuest}>Join as Guest</p>
+                <p onClick={() => navigate('/auth', { state: { formState: 1 } })}>Register</p>
+                <div role='button' onClick={() => navigate(isLoggedIn ? '/home' : '/auth', { state: { formState: 0 } })}>
                     <p>{isLoggedIn ? 'Dashboard' : 'Login'}</p>
                 </div>
             </div>
