@@ -1,5 +1,6 @@
 import httpStatus from "http-status";
 import { User } from "../models/user.model.js";
+import { Meeting } from "../models/meeting.model.js";
 import bcrypt, {hash} from "bcrypt"
 
 import crypto from "crypto"
@@ -59,4 +60,55 @@ const register = async (req, res) => {
     }
 }
 
-export {login, register }
+const addToHistory = async (req, res) => {
+    const { token, meeting_code } = req.body;
+
+    try {
+        const user = await User.findOne({ token: token });
+        if (!user) {
+            return res.status(httpStatus.NOT_FOUND).json({ message: "User not found" });
+        }
+
+        const newMeeting = new Meeting({
+            user_id: user.username,
+            meetingCode: meeting_code
+        });
+
+        await newMeeting.save();
+        return res.status(httpStatus.CREATED).json({ message: "Added to activity" });
+    } catch (e) {
+        return res.status(500).json({ message: `Something went wrong ${e}` });
+    }
+}
+
+const getActivity = async (req, res) => {
+    const { token } = req.query;
+
+    try {
+        const user = await User.findOne({ token: token });
+        if (!user) {
+            return res.status(httpStatus.NOT_FOUND).json({ message: "User not found" });
+        }
+
+        const meetings = await Meeting.find({ user_id: user.username });
+        return res.status(httpStatus.OK).json(meetings);
+    } catch (e) {
+        return res.status(500).json({ message: `Something went wrong ${e}` });
+    }
+}
+
+const getUserInfo = async (req, res) => {
+    const { token } = req.query;
+
+    try {
+        const user = await User.findOne({ token: token });
+        if (!user) {
+            return res.status(httpStatus.NOT_FOUND).json({ message: "User not found" });
+        }
+        return res.status(httpStatus.OK).json({ name: user.name, username: user.username });
+    } catch (e) {
+        return res.status(500).json({ message: `Something went wrong ${e}` });
+    }
+}
+
+export { login, register, addToHistory, getActivity, getUserInfo }

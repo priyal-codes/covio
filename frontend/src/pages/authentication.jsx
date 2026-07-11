@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Snackbar from '@mui/material/Snackbar';
 import { AuthContext } from '../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const darkTheme = createTheme({
   palette: {
@@ -29,6 +30,7 @@ const darkTheme = createTheme({
 
 export default function Authentication() {
     const { handleRegister, handleLogin } = React.useContext(AuthContext);
+    const navigate = useNavigate();
 
     const [username, setUsername] = React.useState("");
     const [password, setPassword] = React.useState("");
@@ -39,10 +41,18 @@ export default function Authentication() {
     const [formState, setFormState] = React.useState(0);
     const [open, setOpen] = React.useState(false);
 
+    React.useEffect(() => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        navigate("/home");
+      }
+    }, [navigate]);
+
     let handleAuth = async () => {
       try {
         if(formState === 0) {
           await handleLogin(username, password);
+          navigate("/home");
         }
         if(formState === 1) {
           let result = await handleRegister(name, username, password);

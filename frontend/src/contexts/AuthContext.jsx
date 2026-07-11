@@ -36,7 +36,7 @@ export const AuthProvider = ({ children }) => {
                 password: password
             });
             
-            if(request.status === HttpStatusCode.OK) {
+            if(request.status === 200) {
                 localStorage.setItem("token", request.data.token);
             }
         } catch (err) {

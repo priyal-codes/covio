@@ -1,20 +1,29 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import "../App.css"
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 
-export default function landing() {
+export default function Landing() {
+    const navigate = useNavigate();
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    useEffect(() => {
+        if (localStorage.getItem("token")) {
+            setIsLoggedIn(true);
+        }
+    }, []);
+
     return (
         <div className='landingPageContainer'>
           <nav>
-            <div className='navHeader'>
+            <div className='navHeader' style={{ cursor: 'pointer' }} onClick={() => navigate('/')}>
                <h2>Covio Video Call</h2>
             </div>
             <div className='navlist'>
-                <p>Join as Guest</p>
-                <p>Register</p>
-                <div role='button'>
-                    <p>Login</p>
+                <p onClick={() => navigate('/auth')}>Join as Guest</p>
+                <p onClick={() => navigate('/auth')}>Register</p>
+                <div role='button' onClick={() => navigate(isLoggedIn ? '/home' : '/auth')}>
+                    <p>{isLoggedIn ? 'Dashboard' : 'Login'}</p>
                 </div>
             </div>
           </nav>
@@ -25,7 +34,9 @@ export default function landing() {
 
                 <p>Cover a distance by Covio Video call</p>
                 <div role='button'>
-                  <Link to={"/auth"}>Get Started</Link>
+                  <Link to={isLoggedIn ? "/home" : "/auth"}>
+                    {isLoggedIn ? "Go to Home" : "Get Started"}
+                  </Link>
                 </div>
 
             </div>
