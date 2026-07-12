@@ -7,7 +7,7 @@
   flex-direction: column;
   position: relative;
   overflow: hidden;
-  font-family: 'Outfit', 'Inter', sans-serif;
+  font-family: var(--font-body, 'Inter', sans-serif);
 }
 
 .navbar {
@@ -165,7 +165,7 @@
   color: #fff;
   font-size: 1rem;
   outline: none;
-  font-family: inherit;
+  font-family: var(--font-mono, 'Space Mono', monospace);
   transition: all 0.3s ease;
 }
 
@@ -363,6 +363,7 @@
   font-weight: 700;
   font-size: 1.1rem;
   color: #ffffff;
+  font-family: var(--font-mono, 'Space Mono', monospace);
 }
 
 .historyDate {

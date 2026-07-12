@@ -24,7 +24,13 @@ const darkTheme = createTheme({
     },
   },
   typography: {
-    fontFamily: "'Outfit', 'Inter', sans-serif",
+    fontFamily: "'Inter', sans-serif",
+    h1: { fontFamily: "'Sora', sans-serif" },
+    h2: { fontFamily: "'Sora', sans-serif" },
+    h3: { fontFamily: "'Sora', sans-serif" },
+    h4: { fontFamily: "'Sora', sans-serif" },
+    h5: { fontFamily: "'Sora', sans-serif" },
+    h6: { fontFamily: "'Sora', sans-serif" },
   },
 });
 

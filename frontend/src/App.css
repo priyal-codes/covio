@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Sora:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap');
 
 :root {
   --primary-accent: #bf7045;
@@ -9,6 +9,11 @@
   --text-muted: #8e8c84;
   --glass-bg: rgba(29, 32, 32, 0.45);
   --glass-border: rgba(255, 255, 255, 0.05);
+  
+  /* Modern Font Stack */
+  --font-heading: 'Sora', 'Outfit', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'Space Mono', monospace;
 }
 
 * {
@@ -20,8 +25,12 @@
 body {
   background-color: var(--bg-deep);
   color: var(--text-white);
-  font-family: 'Outfit', 'Inter', sans-serif;
+  font-family: var(--font-body);
   overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
 }
 
 .landingPageContainer {
