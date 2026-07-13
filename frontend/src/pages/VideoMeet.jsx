@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState, useCallback } from 'react'
 import io from "socket.io-client";
-import { IconButton, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
 import { Button } from '@mui/material';
-import { Input } from '@mui/base';
 import VideoCamIcon from '@mui/icons-material/VideoCam';
 import VideoCamOffIcon from '@mui/icons-material/VideoCamOff'
 import styles from "../styles/videoComponent.module.css";
@@ -48,7 +47,6 @@ export default function VideoMeetComponent() {
     let [audio, setAudio] = useState(true);
     let [screen, setScreen] = useState(false);
     let [showModal, setModal] = useState(false);
-    let [screenAvailable, setScreenAvailable] = useState(true);
 
     let [message, setMessage] = useState("");
     let [messages, setMessages] = useState([]);
@@ -97,43 +95,27 @@ export default function VideoMeetComponent() {
     let [videos, setVideos] = useState([])
     let [askForUsername, setAskForUsername] = useState(true); 
 
-    const getPermissions = async () => {
+    const silence = useCallback(() => {
+        let ctx = new AudioContext()
+        let oscillator = ctx.createOscillator();
+        let dst = oscillator.connect(ctx.createMediaStreamDestination());
+        oscillator.start();
+        ctx.resume()
+        return Object.assign(dst.stream.getAudioTracks()[0], { enabled: false })
+    }, []);
+
+    const black = useCallback(({width = 640, height = 480} = {}) => {
+        let canvas = Object.assign(document.createElement("canvas"), {width, height});
+        canvas.getContext('2d').fillRect(0, 0, width, height);
+        let stream = canvas.captureStream();
+        return Object.assign(stream.getVideoTracks()[0], { enabled: false })
+    }, []);
+
+    const getUserMediaSuccess = useCallback((stream) => {
         try {
-            const videoPermission = await navigator.mediaDevices.getUserMedia({video: true})
-            if(videoPermission) {
-                setVideoAvailable(true);
-            } else {
-                setVideoAvailable(false);
-            } 
-
-            const AudioPermission = await navigator.mediaDevices.getUserMedia({audio: true})
-            if(AudioPermission) {
-                setAudioAvailable(true);
-            } else {
-                setAudioAvailable(false);
-            } 
-
-            if(videoAvailable || audioAvailable) {
-                const userMediaStream = await navigator.mediaDevices.getUserMedia({video: videoAvailable, audio: audioAvailable});
-                if(userMediaStream) {
-                    window.localStream = userMediaStream;
-                    if(localVideoRef.current) {
-                        localVideoRef.current.srcObject = userMediaStream;
-                    } 
-                }
+            if (window.localStream) {
+                window.localStream.getTracks().forEach(track => track.stop()) 
             }
-        } catch (err){
-            console.log(err);
-        }
-    }
-
-    useEffect(() => {
-        getPermissions();
-    }, []) 
-
-    let getUserMediaSuccess = (stream) => {
-        try {
-            window.localStream.getTracks().forEach(track => track.stop()) 
         } catch (e) {
             console.log(e);
         }
@@ -156,10 +138,10 @@ export default function VideoMeetComponent() {
             setVideo(false)
             setAudio(false);
 
-            try{
+            try {
                 let tracks = localVideoRef.current.srcObject.getTracks()
                 tracks.forEach(track => track.stop())
-            } catch(e) {console.log(e)}
+            } catch (e) {console.log(e)}
 
             let blackSilence = ( ...args) => new MediaStream([black( ...args), silence()]);
             window.localStream = blackSilence();
@@ -175,25 +157,9 @@ export default function VideoMeetComponent() {
                 })
             }
         })
-    }
+    }, [black, silence]);
 
-    let silence = () => {
-        let ctx = new AudioContext()
-        let oscillator = ctx.createOscillator();
-        let dst = oscillator.connect(ctx.createMediaStreamDestination());
-        oscillator.start();
-        ctx.resume()
-        return Object.assign(dst.stream.getAudioTracks()[0], { enabled: false })
-    }
-
-    let black = ({width = 640, height = 480} = {}) => {
-        let canvas = Object.assign(document.createElement("canvas"), {width, height});
-        canvas.getContext('2d').fillRect(0, 0, width, height);
-        let stream = canvas.captureStream();
-        return Object.assign(stream.getVideoTracks()[0], { enabled: false })
-    }
-
-    let getUserMedia = () => {
+    const getUserMedia = useCallback(() => {
         if((video && videoAvailable) || (audio && audioAvailable)) {
             navigator.mediaDevices.getUserMedia({video: video, audio: audio})
             .then(getUserMediaSuccess)
@@ -202,15 +168,62 @@ export default function VideoMeetComponent() {
             try {
                 let tracks = localVideoRef.current.srcObject.getTracks();
                 tracks.forEach(track => track.stop())
-            } catch(e) {}
+            } catch {}
         }
-    }
+    }, [video, videoAvailable, audio, audioAvailable, getUserMediaSuccess]);
+
+    const getPermissions = useCallback(async () => {
+        try {
+            let videoPermission = null;
+            try {
+                videoPermission = await navigator.mediaDevices.getUserMedia({video: true})
+            } catch (e) {
+                console.log("No video track", e);
+            }
+
+            let audioPermission = null;
+            try {
+                audioPermission = await navigator.mediaDevices.getUserMedia({audio: true})
+            } catch (e) {
+                console.log("No audio track", e);
+            }
+
+            const videoOk = !!videoPermission;
+            const audioOk = !!audioPermission;
+
+            setVideoAvailable(videoOk);
+            setAudioAvailable(audioOk);
+
+            if(videoOk || audioOk) {
+                const userMediaStream = await navigator.mediaDevices.getUserMedia({video: videoOk, audio: audioOk});
+                if(userMediaStream) {
+                    window.localStream = userMediaStream;
+                    if(localVideoRef.current) {
+                        localVideoRef.current.srcObject = userMediaStream;
+                    } 
+                }
+            }
+
+            if (videoPermission) {
+                videoPermission.getTracks().forEach(t => t.stop());
+            }
+            if (audioPermission) {
+                audioPermission.getTracks().forEach(t => t.stop());
+            }
+        } catch (err){
+            console.log(err);
+        }
+    }, []);
+
+    useEffect(() => {
+        getPermissions();
+    }, [getPermissions]);
 
     useEffect(() => {
         if(video === undefined && audio === undefined) {
             getUserMedia();
         }
-    }, [audio, video])
+    }, [audio, video, getUserMedia]);
 
     let gotMessageFromServer = (fromId, message) => {
          var signal = JSON.parse(message)
@@ -336,7 +349,7 @@ export default function VideoMeetComponent() {
 
                     try {
                         connections[id2].addStream(window.localStream)
-                    } catch (e) {}
+                    } catch {}
 
                     connections[id2].createOffer().then((description)=>{
                         connections[id2].setLocalDescription(description)
@@ -434,7 +447,7 @@ export default function VideoMeetComponent() {
         try {
             let tracks = localVideoRef.current.srcObject.getTracks();
             tracks.forEach(track => track.stop());
-        } catch (e) {}
+        } catch {}
         if (socketRef.current) {
             socketRef.current.disconnect();
         }

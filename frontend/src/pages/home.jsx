@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styles from '../styles/home.module.css';
@@ -9,13 +9,17 @@ import VideoCamIcon from '@mui/icons-material/VideoCam';
 
 export default function HomeComponent() {
     const navigate = useNavigate();
-    const [token, setToken] = useState(localStorage.getItem("token"));
+    const [token] = useState(localStorage.getItem("token"));
     const [username, setUsername] = useState("");
-    const [name, setName] = useState("");
     const [meetingCode, setMeetingCode] = useState("");
     const [historyOpen, setHistoryOpen] = useState(false);
     const [historyList, setHistoryList] = useState([]);
     const [loadingHistory, setLoadingHistory] = useState(false);
+
+    const handleLogout = useCallback(() => {
+        localStorage.removeItem("token");
+        navigate('/auth');
+    }, [navigate]);
 
     useEffect(() => {
         if (!token) {
@@ -29,19 +33,13 @@ export default function HomeComponent() {
         })
         .then(res => {
             setUsername(res.data.username);
-            setName(res.data.name);
         })
         .catch(err => {
             console.error("Failed to fetch user info", err);
             // If token is invalid/expired, log out
             handleLogout();
         });
-    }, [token, navigate]);
-
-    const handleLogout = () => {
-        localStorage.removeItem("token");
-        navigate('/auth');
-    };
+    }, [token, navigate, handleLogout]);
 
     const fetchHistory = async () => {
         setLoadingHistory(true);
