@@ -1,9 +1,9 @@
-/* Modern Redesigned Design Tokens - Muted Warm Copper & Charcoal Sage */
+/* Modern Redesigned Design Tokens - Ocean Breeze Indigo & Teal */
 :root {
     --bg-dark: #141616;
     --bg-card: rgba(29, 32, 32, 0.65);
     --border-glass: rgba(255, 255, 255, 0.05);
-    --primary-gradient: linear-gradient(135deg, #8c7853 0%, #bf7045 100%);
+    --primary-gradient: linear-gradient(135deg, #14b8a6 0%, #3b82f6 100%);
     --accent-red: linear-gradient(135deg, #b85c5c 0%, #8c3b3b 100%);
     --accent-green: linear-gradient(135deg, #608c74 0%, #3e5c4a 100%);
     --text-primary: #f5f4f0;
@@ -31,7 +31,7 @@
     border: 1px solid var(--border-glass);
     padding: 40px;
     border-radius: 28px;
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4), 0 0 50px rgba(191, 112, 69, 0.05);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4), 0 0 50px rgba(59, 130, 246, 0.05);
     display: flex;
     flex-direction: column;
     gap: 28px;
@@ -43,14 +43,14 @@
 
 .lobbyCard:hover {
     transform: translateY(-6px);
-    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5), 0 0 60px rgba(191, 112, 69, 0.08);
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5), 0 0 60px rgba(59, 130, 246, 0.08);
 }
 
 .lobbyCard h2 {
     font-size: 32px;
     font-weight: 800;
     margin: 0;
-    background: linear-gradient(to right, #f5f4f0, #d48b61);
+    background: linear-gradient(to right, #f5f4f0, #14b8a6);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     letter-spacing: -0.8px;
@@ -111,7 +111,7 @@
     height: 68vh;
     border-radius: 28px;
     border: 2px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5), 0 0 40px rgba(191, 112, 69, 0.02);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5), 0 0 40px rgba(59, 130, 246, 0.02);
 }
 
 .localVideo {
@@ -157,7 +157,7 @@
 .remoteVideoCard:hover {
     transform: scale(1.02);
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-    border-color: rgba(191, 112, 69, 0.4);
+    border-color: rgba(59, 130, 246, 0.4);
 }
 
 .remoteVideo {
@@ -201,7 +201,7 @@
     border-radius: 24px; /* Squircle control bar */
     z-index: 15;
     border: 1px solid var(--border-glass);
-    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4), 0 0 30px rgba(191, 112, 69, 0.04);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4), 0 0 30px rgba(59, 130, 246, 0.04);
     transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -234,7 +234,7 @@
 .controlButton.active {
     background: var(--primary-gradient);
     border-color: transparent;
-    box-shadow: 0 8px 20px rgba(191, 112, 69, 0.2);
+    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.2);
 }
 
 .controlButton.danger {
@@ -274,7 +274,7 @@
     z-index: 12;
     display: flex;
     flex-direction: column;
-    box-shadow: -15px 20px 50px rgba(0, 0, 0, 0.4), 0 0 30px rgba(191, 112, 69, 0.02);
+    box-shadow: -15px 20px 50px rgba(0, 0, 0, 0.4), 0 0 30px rgba(59, 130, 246, 0.02);
     overflow: hidden;
     transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -290,7 +290,7 @@
     font-size: 22px;
     font-weight: 800;
     margin: 0;
-    background: linear-gradient(to right, #f5f4f0, #d48b61);
+    background: linear-gradient(to right, #f5f4f0, #14b8a6);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     letter-spacing: -0.5px;
@@ -366,9 +366,9 @@
 }
 
 .chatInputField:focus {
-    border-color: rgba(191, 112, 69, 0.5);
+    border-color: rgba(59, 130, 246, 0.5);
     background: rgba(255, 255, 255, 0.05);
-    box-shadow: 0 0 0 2px rgba(191, 112, 69, 0.2);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
 }
 
 /* Chat Message Bubbles with High Text Contrast */
@@ -398,8 +398,8 @@
 }
 
 .messageBubble.ai {
-    background: linear-gradient(135deg, rgba(140, 120, 83, 0.22) 0%, rgba(191, 112, 69, 0.22) 100%);
-    border: 1px solid rgba(191, 112, 69, 0.35);
+    background: linear-gradient(135deg, rgba(20, 184, 166, 0.22) 0%, rgba(59, 130, 246, 0.22) 100%);
+    border: 1px solid rgba(59, 130, 246, 0.35);
     color: #ffffff;
     align-self: flex-start;
     border-bottom-left-radius: 4px;
@@ -409,7 +409,7 @@
     font-size: 12px;
     font-weight: 700;
     font-family: var(--font-heading, 'Sora', sans-serif);
-    color: #d48b61;
+    color: #14b8a6;
     margin-bottom: 6px;
     text-transform: capitalize;
     letter-spacing: 0.2px;
@@ -420,7 +420,7 @@
 }
 
 .messageBubble.ai .messageSender {
-    color: #ebd1bd;
+    color: #93c5fd;
     display: flex;
     align-items: center;
     gap: 6px;
@@ -459,7 +459,7 @@
 .typingIndicator span {
     width: 7px;
     height: 7px;
-    background: #d48b61;
+    background: #14b8a6;
     border-radius: 50%;
     animation: typing 1.2s infinite ease-in-out;
 }
@@ -500,7 +500,7 @@
     font-size: 36px;
     font-weight: 800;
     color: #ffffff;
-    box-shadow: 0 10px 30px rgba(191, 112, 69, 0.25);
+    box-shadow: 0 10px 30px rgba(59, 130, 246, 0.25);
 }
 
 .placeholderText {

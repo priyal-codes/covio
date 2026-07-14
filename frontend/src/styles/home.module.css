@@ -28,7 +28,7 @@
   font-size: 1.8rem;
   font-weight: 800;
   letter-spacing: -1px;
-  background: linear-gradient(135deg, #f5f4f0 30%, #bf7045 100%);
+  background: linear-gradient(135deg, #f5f4f0 30%, #3b82f6 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   cursor: pointer;
@@ -101,14 +101,14 @@
 
 .userInfo {
   font-size: 1.1rem;
-  color: #bf7045;
+  color: #3b82f6;
   font-weight: 600;
   letter-spacing: 0.5px;
-  background: rgba(191, 112, 69, 0.08);
+  background: rgba(59, 130, 246, 0.08);
   padding: 0.5rem 1.2rem;
   border-radius: 50px;
   width: fit-content;
-  border: 1px solid rgba(191, 112, 69, 0.15);
+  border: 1px solid rgba(59, 130, 246, 0.15);
 }
 
 @media (max-width: 968px) {
@@ -170,13 +170,13 @@
 }
 
 .meetInput:focus {
-  border-color: #bf7045;
+  border-color: #3b82f6;
   background: rgba(255, 255, 255, 0.06);
-  box-shadow: 0 0 15px rgba(191, 112, 69, 0.15);
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.15);
 }
 
 .joinBtn {
-  background: linear-gradient(135deg, #8c7853 0%, #bf7045 100%);
+  background: linear-gradient(135deg, #14b8a6 0%, #3b82f6 100%);
   border: none;
   border-radius: 14px;
   color: #fff;
@@ -213,7 +213,7 @@
 }
 
 .createLink {
-  color: #bf7045;
+  color: #3b82f6;
   text-decoration: none;
   font-weight: 600;
   cursor: pointer;
@@ -226,7 +226,7 @@
 }
 
 .createLink:hover {
-  color: #d48b61;
+  color: #14b8a6;
   text-decoration: underline;
 }
 
@@ -349,7 +349,7 @@
 
 .historyItem:hover {
   background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(191, 112, 69, 0.3);
+  border-color: rgba(59, 130, 246, 0.3);
   transform: translateY(-2px);
 }
 
@@ -372,9 +372,9 @@
 }
 
 .joinHistoryBtn {
-  background: rgba(191, 112, 69, 0.1);
-  border: 1px solid rgba(191, 112, 69, 0.2);
-  color: #bf7045;
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  color: #3b82f6;
   border-radius: 8px;
   padding: 0.4rem 0.8rem;
   font-size: 0.85rem;
@@ -384,7 +384,7 @@
 }
 
 .joinHistoryBtn:hover {
-  background: #bf7045;
+  background: #3b82f6;
   color: #fff;
   border-color: transparent;
 }

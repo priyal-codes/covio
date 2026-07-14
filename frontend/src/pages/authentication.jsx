@@ -16,7 +16,7 @@ const darkTheme = createTheme({
   palette: {
     mode: 'dark',
     primary: {
-      main: '#bf7045', // warm copper
+      main: '#3b82f6', // deep indigo
     },
     background: {
       default: '#141616',
@@ -108,7 +108,7 @@ export default function Authentication() {
             background: 'rgba(29, 32, 32, 0.65)',
             backdropFilter: 'blur(20px)',
             border: '1px solid rgba(255, 255, 255, 0.05)',
-            boxShadow: '0 20px 50px rgba(0,0,0,0.4), 0 0 40px rgba(191, 112, 69, 0.03)',
+            boxShadow: '0 20px 50px rgba(0,0,0,0.4), 0 0 40px rgba(59, 130, 246, 0.03)',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -118,8 +118,8 @@ export default function Authentication() {
           <Avatar 
             sx={{ 
               m: 1, 
-              background: 'linear-gradient(135deg, #8c7853 0%, #bf7045 100%)',
-              boxShadow: '0 8px 20px rgba(191, 112, 69, 0.15)',
+              background: 'linear-gradient(135deg, #14b8a6 0%, #3b82f6 100%)',
+              boxShadow: '0 8px 20px rgba(59, 130, 246, 0.15)',
               width: 56,
               height: 56
             }}
@@ -132,7 +132,7 @@ export default function Authentication() {
             variant="h4" 
             sx={{ 
               fontWeight: 800, 
-              background: 'linear-gradient(to right, #ffffff, #d48b61)',
+              background: 'linear-gradient(to right, #ffffff, #14b8a6)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               letterSpacing: '-0.5px'
@@ -219,11 +219,11 @@ export default function Authentication() {
                   }
                 }}
                 sx={{
-                  '& label.Mui-focused': { color: '#bf7045' },
+                  '& label.Mui-focused': { color: '#3b82f6' },
                   '& .MuiOutlinedInput-root': {
                     '& fieldset': { borderColor: 'rgba(255,255,255,0.05)' },
-                    '&:hover fieldset': { borderColor: 'rgba(191,112,69,0.4)' },
-                    '&.Mui-focused fieldset': { borderColor: '#bf7045' },
+                    '&:hover fieldset': { borderColor: 'rgba(59,130,246,0.4)' },
+                    '&.Mui-focused fieldset': { borderColor: '#3b82f6' },
                   }
                 }}
               />
@@ -246,11 +246,11 @@ export default function Authentication() {
                 }
               }}
               sx={{
-                '& label.Mui-focused': { color: '#bf7045' },
+                '& label.Mui-focused': { color: '#3b82f6' },
                 '& .MuiOutlinedInput-root': {
                   '& fieldset': { borderColor: 'rgba(255,255,255,0.05)' },
-                  '&:hover fieldset': { borderColor: 'rgba(191,112,69,0.4)' },
-                  '&.Mui-focused fieldset': { borderColor: '#bf7045' },
+                  '&:hover fieldset': { borderColor: 'rgba(59,130,246,0.4)' },
+                  '&.Mui-focused fieldset': { borderColor: '#3b82f6' },
                 }
               }}
             />
@@ -274,11 +274,11 @@ export default function Authentication() {
                 }
               }}
               sx={{
-                '& label.Mui-focused': { color: '#bf7045' },
+                '& label.Mui-focused': { color: '#3b82f6' },
                 '& .MuiOutlinedInput-root': {
                   '& fieldset': { borderColor: 'rgba(255,255,255,0.05)' },
-                  '&:hover fieldset': { borderColor: 'rgba(191,112,69,0.4)' },
-                  '&.Mui-focused fieldset': { borderColor: '#bf7045' },
+                  '&:hover fieldset': { borderColor: 'rgba(59,130,246,0.4)' },
+                  '&.Mui-focused fieldset': { borderColor: '#3b82f6' },
                 }
               }}
             />
@@ -300,11 +300,11 @@ export default function Authentication() {
                 padding: '12px',
                 fontWeight: 700,
                 textTransform: 'none',
-                background: 'linear-gradient(135deg, #8c7853 0%, #bf7045 100%)',
-                boxShadow: '0 8px 24px rgba(191, 112, 69, 0.15)',
+                background: 'linear-gradient(135deg, #14b8a6 0%, #3b82f6 100%)',
+                boxShadow: '0 8px 24px rgba(59, 130, 246, 0.15)',
                 '&:hover': {
-                  background: 'linear-gradient(135deg, #706042 0%, #a65d35 100%)',
-                  boxShadow: '0 10px 28px rgba(191, 112, 69, 0.25)',
+                  background: 'linear-gradient(135deg, #0e8f80 0%, #2563eb 100%)',
+                  boxShadow: '0 10px 28px rgba(59, 130, 246, 0.25)',
                 }
               }} 
               onClick={handleAuth}
