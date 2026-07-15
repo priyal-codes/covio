@@ -226,7 +226,7 @@ h1, h2, h3, h4, h5, h6 {
 .landingMainContainer > div:nth-child(2) img {
   max-width: 100%;
   height: auto;
-  max-height: 60vh;
+  max-height: 75vh;
   object-fit: contain;
   z-index: 2;
   filter: drop-shadow(0 20px 50px rgba(0, 0, 0, 0.4));
