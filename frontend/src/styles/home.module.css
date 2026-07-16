@@ -76,10 +76,11 @@
   flex: 1;
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
-  gap: 4rem;
-  padding: 3rem 6rem;
+  gap: 5rem;
+  padding: 4rem 6rem;
   align-items: center;
-  max-width: 1400px;
+  max-width: 1600px;
+  min-height: calc(100vh - 90px);
   margin: 0 auto;
   width: 100%;
 }
@@ -118,10 +119,10 @@
 }
 
 .headline {
-  font-size: 3rem;
+  font-size: 3.8rem;
   font-weight: 800;
-  line-height: 1.2;
-  letter-spacing: -1.5px;
+  line-height: 1.15;
+  letter-spacing: -2px;
   color: #ffffff;
 }
 
@@ -134,8 +135,8 @@
 .joinContainer {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  max-width: 500px;
+  gap: 1.2rem;
+  max-width: 550px;
 }
 
 @media (max-width: 968px) {
@@ -160,10 +161,10 @@
   flex: 1;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 14px;
-  padding: 1rem 1.2rem;
+  border-radius: 16px;
+  padding: 1.2rem 1.5rem;
   color: #fff;
-  font-size: 1rem;
+  font-size: 1.1rem;
   outline: none;
   font-family: var(--font-mono, 'Space Mono', monospace);
   transition: all 0.3s ease;
@@ -178,10 +179,10 @@
 .joinBtn {
   background: linear-gradient(135deg, #14b8a6 0%, #3b82f6 100%);
   border: none;
-  border-radius: 14px;
+  border-radius: 16px;
   color: #fff;
-  padding: 1rem 2rem;
-  font-size: 1rem;
+  padding: 1.2rem 2.5rem;
+  font-size: 1.1rem;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -239,7 +240,7 @@
 .illustration {
   max-width: 100%;
   height: auto;
-  max-height: 420px;
+  max-height: 580px;
   filter: drop-shadow(0 20px 40px rgba(0,0,0,0.3));
   animation: float 6s ease-in-out infinite;
 }
