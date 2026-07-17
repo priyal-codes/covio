@@ -478,21 +478,23 @@ export default function VideoMeetComponent() {
                         fullWidth
                         InputProps={{
                             style: {
-                                color: 'white',
-                                background: 'rgba(255,255,255,0.03)',
+                                color: '#f8fafc',
+                                background: 'rgba(255,255,255,0.05)',
                                 borderRadius: '14px',
                             }
                         }}
                         sx={{
-                            '& label.Mui-focused': { color: '#a855f7' },
+                            '& .MuiInputLabel-root': { 
+                                color: '#94a3b8',
+                            },
+                            '& .MuiInputLabel-root.Mui-focused': { 
+                                color: '#14b8a6',
+                            },
                             '& .MuiOutlinedInput-root': {
-                                '& fieldset': { borderColor: 'rgba(255,255,255,0.1)' },
-                                '&:hover fieldset': { borderColor: 'rgba(168,85,247,0.4)' },
-                                '&.Mui-focused fieldset': { borderColor: '#a855f7' },
+                                '& fieldset': { borderColor: 'rgba(255,255,255,0.15)' },
+                                '&:hover fieldset': { borderColor: 'rgba(20,184,166,0.5)' },
+                                '&.Mui-focused fieldset': { borderColor: '#14b8a6' },
                             }
-                        }}
-                        InputLabelProps={{
-                            style: { color: '#cbd5e1' }
                         }}
                     />
                     <Button 
