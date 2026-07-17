@@ -494,6 +494,7 @@ export default function VideoMeetComponent() {
                                 '& fieldset': { borderColor: 'rgba(255,255,255,0.15)' },
                                 '&:hover fieldset': { borderColor: 'rgba(20,184,166,0.5)' },
                                 '&.Mui-focused fieldset': { borderColor: '#14b8a6' },
+                                '& input': { color: '#f8fafc' },
                             }
                         }}
                     />
