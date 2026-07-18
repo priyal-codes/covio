@@ -7,6 +7,8 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import CloseIcon from '@mui/icons-material/Close';
 import VideoCamIcon from '@mui/icons-material/VideoCam';
 
+const server_url = import.meta.env.VITE_BACKEND_URL || "http://localhost:8000";
+
 export default function HomeComponent() {
     const navigate = useNavigate();
     const [token] = useState(localStorage.getItem("token"));
@@ -28,7 +30,7 @@ export default function HomeComponent() {
         }
 
         // Fetch User Info
-        axios.get("http://localhost:8000/api/v1/users/get_user_info", {
+        axios.get(`${server_url}/api/v1/users/get_user_info`, {
             params: { token }
         })
         .then(res => {
@@ -44,7 +46,7 @@ export default function HomeComponent() {
     const fetchHistory = async () => {
         setLoadingHistory(true);
         try {
-            const res = await axios.get("http://localhost:8000/api/v1/users/get_all_activity", {
+            const res = await axios.get(`${server_url}/api/v1/users/get_all_activity`, {
                 params: { token }
             });
             setHistoryList(res.data);
@@ -66,7 +68,7 @@ export default function HomeComponent() {
 
         try {
             // Save meeting to activity/history in backend
-            await axios.post("http://localhost:8000/api/v1/users/add_to_activity", {
+            await axios.post(`${server_url}/api/v1/users/add_to_activity`, {
                 token,
                 meeting_code: code
             });

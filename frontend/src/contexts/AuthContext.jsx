@@ -4,8 +4,10 @@ import axios, { HttpStatusCode } from "axios";
 
 export const AuthContext = createContext({});
 
+const server_url = import.meta.env.VITE_BACKEND_URL || "http://localhost:8000";
+
 const client = axios.create({
-    baseURL: "http://localhost:8000/api/v1/users"
+    baseURL: `${server_url}/api/v1/users`
 });
 
 export const AuthProvider = ({ children }) => {
