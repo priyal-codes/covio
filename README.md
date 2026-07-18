@@ -3,8 +3,7 @@
 Covio is a real-time video conferencing and collaboration platform designed to provide seamless, high-quality virtual meetings. Built with a modern tech stack supporting peer-to-peer video streaming, real-time messaging, and an integrated AI meeting assistant, Covio makes remote collaboration easy and engaging.
 
 ## 🚀 Live Link
-🔗 **[Launch Covio Live App](YOUR_LIVE_FRONTEND_URL_HERE)**
-*(Replace this with your deployed Render frontend link!)*
+🔗 **[Launch Covio Live App](https://covio.onrender.com)**
 
 ---
 
