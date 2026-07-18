@@ -5,7 +5,7 @@ import styles from '../styles/home.module.css';
 import HistoryIcon from '@mui/icons-material/History';
 import LogoutIcon from '@mui/icons-material/Logout';
 import CloseIcon from '@mui/icons-material/Close';
-import VideoCamIcon from '@mui/icons-material/VideoCam';
+import VideoCamIcon from '@mui/icons-material/Videocam';
 
 const server_url = import.meta.env.VITE_BACKEND_URL || "http://localhost:8000";
 

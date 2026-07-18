@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState, useCallback } from 'react'
 import io from "socket.io-client";
 import { TextField } from '@mui/material';
 import { Button } from '@mui/material';
-import VideoCamIcon from '@mui/icons-material/VideoCam';
-import VideoCamOffIcon from '@mui/icons-material/VideoCamOff'
+import VideoCamIcon from '@mui/icons-material/Videocam';
+import VideoCamOffIcon from '@mui/icons-material/VideocamOff';
 import styles from "../styles/videoComponent.module.css";
 import CallEndIcon from '@mui/icons-material/CallEnd'
 import MicIcon from '@mui/icons-material/Mic'
