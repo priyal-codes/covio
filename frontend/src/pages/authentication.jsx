@@ -203,7 +203,6 @@ export default function Authentication() {
             {formState === 1 && (
               <TextField
                 margin="normal"
-                required
                 fullWidth
                 id="name"
                 label="Full Name"
@@ -231,7 +230,6 @@ export default function Authentication() {
             
             <TextField
               margin="normal"
-              required
               fullWidth
               id="username"
               label="Username"
@@ -257,7 +255,6 @@ export default function Authentication() {
             
             <TextField
               margin="normal"
-              required
               fullWidth
               name="password"
               label="Password"
