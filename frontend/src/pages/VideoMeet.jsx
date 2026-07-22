@@ -32,10 +32,9 @@ export default function VideoMeetComponent() {
     const setLocalVideoRef = (element) => {
         if (element) {
             localVideoRef.current = element;
-            if (screen && window.screenStream) {
-                element.srcObject = window.screenStream;
-            } else if (window.localStream) {
-                element.srcObject = window.localStream;
+            const targetStream = (screen && window.screenStream) ? window.screenStream : window.localStream;
+            if (targetStream && element.srcObject !== targetStream) {
+                element.srcObject = targetStream;
             }
         }
     };
@@ -541,7 +540,7 @@ export default function VideoMeetComponent() {
                                  <video
                                      className={styles.remoteVideo}
                                      ref={(ref) => {
-                                         if (ref && video.stream) {
+                                         if (ref && video.stream && ref.srcObject !== video.stream) {
                                              ref.srcObject = video.stream;
                                          }
                                      }}
