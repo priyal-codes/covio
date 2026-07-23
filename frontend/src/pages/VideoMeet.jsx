@@ -580,89 +580,34 @@ export default function VideoMeetComponent() {
                  {showModal && (
                       <div className={styles.chatRoom}>
                           <div className={styles.chatHeader}>
-                              <h3 className={styles.chatTitle}>Meeting Space</h3>
-                              <div className={styles.chatTabs}>
-                                  <button 
-                                      className={`${styles.chatTabButton} ${chatTab === 'chat' ? styles.active : ''}`}
-                                      onClick={() => setChatTab('chat')}
-                                  >
-                                      Room Chat
-                                  </button>
-                                  <button 
-                                      className={`${styles.chatTabButton} ${chatTab === 'ai' ? styles.active : ''}`}
-                                      onClick={() => setChatTab('ai')}
-                                  >
-                                      ✨ AI Assistant
-                                  </button>
-                              </div>
+                              <h3 className={styles.chatTitle}>Meeting Chat</h3>
                           </div>
                           
-                          {chatTab === 'chat' ? (
-                              <>
-                                  <div className={styles.chatMessages}>
-                                      {messages.map((msg, index) => (
-                                          <div 
-                                              key={index} 
-                                              className={`${styles.messageBubble} ${msg.socketIdSender === socketIdRef.current ? styles.self : styles.other}`}
-                                          >
-                                              <div className={styles.messageSender}>{msg.sender}</div>
-                                              <div className={styles.messageText}>{msg.data}</div>
-                                          </div>
-                                      ))}
+                          <div className={styles.chatMessages}>
+                              {messages.map((msg, index) => (
+                                  <div 
+                                      key={index} 
+                                      className={`${styles.messageBubble} ${msg.socketIdSender === socketIdRef.current ? styles.self : styles.other}`}
+                                  >
+                                      <div className={styles.messageSender}>{msg.sender}</div>
+                                      <div className={styles.messageText}>{msg.data}</div>
                                   </div>
-                                  <div className={styles.chatInput}>
-                                      <input 
-                                          className={styles.chatInputField}
-                                          placeholder="Type message to room..." 
-                                          value={message} 
-                                          onChange={e => setMessage(e.target.value)} 
-                                          onKeyDown={e => {
-                                              if (e.key === 'Enter') {
-                                                  sendMessage();
-                                              }
-                                          }}
-                                      />
-                                      <Button onClick={sendMessage} variant="contained" style={{ borderRadius: '12px', background: 'linear-gradient(135deg, #14b8a6 0%, #3b82f6 100%)', textTransform: 'none' }}>Send</Button>
-                                  </div>
-                              </>
-                          ) : (
-                              <>
-                                  <div className={styles.chatMessages}>
-                                      {aiMessages.map((msg, index) => (
-                                          <div 
-                                              key={index} 
-                                              className={`${styles.messageBubble} ${msg.socketIdSender === socketIdRef.current ? styles.self : styles.ai}`}
-                                          >
-                                              <div className={styles.messageSender}>
-                                                  {msg.sender === "AI Assistant" ? "🤖 AI Assistant" : msg.sender}
-                                              </div>
-                                              <div className={styles.messageText} style={{ whiteSpace: "pre-line" }}>{msg.data}</div>
-                                          </div>
-                                      ))}
-                                      {isAiTyping && (
-                                          <div className={styles.typingIndicator}>
-                                              <span></span>
-                                              <span></span>
-                                              <span></span>
-                                          </div>
-                                      )}
-                                  </div>
-                                  <div className={styles.chatInput}>
-                                      <input 
-                                          className={styles.chatInputField}
-                                          placeholder="Ask AI assistant..." 
-                                          value={aiMessage} 
-                                          onChange={e => setAiMessage(e.target.value)} 
-                                          onKeyDown={e => {
-                                              if (e.key === 'Enter') {
-                                                  handleSendAiMessage();
-                                              }
-                                          }}
-                                      />
-                                      <Button onClick={handleSendAiMessage} variant="contained" style={{ borderRadius: '12px', background: 'linear-gradient(135deg, #14b8a6 0%, #3b82f6 100%)', textTransform: 'none' }}>Ask</Button>
-                                  </div>
-                              </>
-                          )}
+                              ))}
+                          </div>
+                          <div className={styles.chatInput}>
+                              <input 
+                                  className={styles.chatInputField}
+                                  placeholder="Type message to room..." 
+                                  value={message} 
+                                  onChange={e => setMessage(e.target.value)} 
+                                  onKeyDown={e => {
+                                      if (e.key === 'Enter') {
+                                          sendMessage();
+                                      }
+                                  }}
+                              />
+                              <Button onClick={sendMessage} variant="contained" style={{ borderRadius: '12px', background: 'linear-gradient(135deg, #14b8a6 0%, #3b82f6 100%)', textTransform: 'none' }}>Send</Button>
+                          </div>
                       </div>
                  )}
             </div> 
